@@ -1,15 +1,7 @@
+$servicename = hiera('ntpname')
 package { 'ntp' :
         ensure => installed,
         }
-case $::osfamily{
-      'redhat': {
-        service {'ntpd':
+service {$servicename:
           ensure => running,
         }
-      }
-      'debian': {
-        service {'ntp':
-          ensure => running,
-        }
-      }
-    }
