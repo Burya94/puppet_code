@@ -1,12 +1,4 @@
 ---
-package:
-  ntp:
-    ensure: installed
-
-service:
-  ntp:
-    ensure: running
-
 classes:
   cr_user
 
