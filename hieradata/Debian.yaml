@@ -1,2 +1,14 @@
 ---
-  ntpname: ntp
+package:
+  ntp:
+    ensure: installed
+
+service:
+  ntp:
+    ensure: running
+
+classes:
+  cr_user
+
+cr_user::user_name: 'debianuser'
+cr_user::user_password: 'debianpass'

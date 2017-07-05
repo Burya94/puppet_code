@@ -1,2 +1,14 @@
 ---
-  ntpname: ntpd
+package:
+  ntp:
+    ensure: installed
+
+service:
+  ntpd:
+    ensure: running
+
+classes:
+  cr_user
+
+cr_user::user_name: 'redhatuser'
+cr_user::user_password: 'redhatpass'

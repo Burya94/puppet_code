@@ -1,14 +1,13 @@
-$servicename = hiera('ntpname')
-
-package { 'ntp' :
-        ensure => installed,
-        }
-
-service {$servicename:
-          ensure => running,
-        }
-
-class {'cr_user':
-  user_name => 'tester',
-  user_password => 'passwd'
+node default{
+  $classes = hiera('classes', '')
+  $package = hiera('package', '')
+  $service = hiera('service', '')
+  create_resources('package', $package)
+  create_resources('service', $service)
+  if ($classes) {
+    hiera_include('classes')
   }
+  else{
+    notify { 'Default node invocation' :}
+  }
+}
