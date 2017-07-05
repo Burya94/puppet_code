@@ -1,6 +1,6 @@
 ---
 classes:
-  cr_user
+  - cr_user
 
 cr_user::user_name: 'commonuser'
 cr_user::user_password: 'commonpass'
