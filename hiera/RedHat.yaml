@@ -6,8 +6,6 @@ classes:
 cr_user::user_name: 'redhatuser'
 cr_user::user_password: 'redhatpass'
 
-ntp::restrict:
-  -
 ntp::autoupdate: false
 ntp::enable: true
 ntp::servers:

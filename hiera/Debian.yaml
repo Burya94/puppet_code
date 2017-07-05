@@ -7,8 +7,6 @@ cr_user::user_name: 'debianuser'
 cr_user::user_password: 'debianpass'
 
 ntp::service_name: 'ntp'
-ntp::restrict:
-    -
 ntp::autoupdate: false
 ntp::enable: true
 ntp::servers:
