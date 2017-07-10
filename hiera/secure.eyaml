@@ -1,2 +1,25 @@
 ---
-  cr_user::user_password: 
+  classes:
+    - cr_user
+    
+  users:
+    1:
+      user_name: "usertest1"
+      user_password:
+
+
+
+      ssh_public:
+
+
+      ssh_private:
+    2:
+      user_name: "usertest2"
+      user_password:
+
+
+
+      ssh_public:
+
+
+      ssh_private:
