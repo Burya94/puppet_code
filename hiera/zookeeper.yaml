@@ -2,8 +2,4 @@
   classes:
     - zookeeper
 
-  zookeeper::service_provider: "systemd"
-  zookeeper::id : "1"
-  zookeeper::datastore: "/var/lib/zookeeper"
-  zookeeper::install::java: true
-  zookeeper::java_package: 'openjdk-7-jre-headless'
+  zookeeper::hostnames: "%{::fqdn}"
