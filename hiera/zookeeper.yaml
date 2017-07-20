@@ -2,8 +2,13 @@
   classes:
     - zookeeper
 
-zookeeper::servers:
-  1:
-    ip: "127.0.0.1"
-    leaderPort: 2888
-    electionPort: 3888
+  zookeeper::service_provider: "systemd"
+  zookeeper::manage_service_file: true
+  zookeeper::id: 1
+  zookeeper::install_method: "archive"
+  zookeeper::archive_dl_url: "http://apache.org/dist/zookeeper/current/zookeeper-3.4.10.tar.gz"
+  zookeeper::java_package: "java-1.8.0-openjdk"
+  zookeeper::install_java: true
+  zookeeper::archive_version: '3.4.10'
+  zookeeper::initialize_datastore: true
+  zookeeper::client_ip: %{::ipaddress}
