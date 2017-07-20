@@ -2,6 +2,8 @@
   classes:
     - zookeeper
 
-  zookeeper::id: "1"
-  zookeeper::servers:
-    1: "%{::ipaddress}"
+zookeeper::servers:
+  1:
+    ip: "127.0.0.1"
+    leaderPort: 2888
+    electionPort: 3888
