@@ -2,4 +2,6 @@
   classes:
     - zookeeper
 
-  zookeeper::hostnames: "%{::fqdn}"
+  zookeeper::id: "1"
+  zookeeper::servers:
+    1: "%{::ipaddress}"
