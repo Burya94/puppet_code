@@ -2,9 +2,7 @@
   classes:
     - zookeeper
 
-  zookeeper::service_provider: "systemd"
-  zookeeper::manage_service_file: true
-  zookeeper::id: 1
+  zookeeper::service_provider: "exhibitor"
   zookeeper::install_method: "archive"
   zookeeper::java_package: "java-1.8.0-openjdk"
   zookeeper::install_java: true
