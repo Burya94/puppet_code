@@ -1,6 +1,7 @@
 ---
   classes:
     - zookeeper
+    - exhibitor
 
   zookeeper::service_provider: "exhibitor"
   zookeeper::install_method: "archive"
