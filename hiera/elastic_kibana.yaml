@@ -1,0 +1,25 @@
+---
+    classes:
+        - elasticsearch
+        - kibana
+
+    elasticsearch::java_install: true
+    elastucsearch::manage_repo: true
+    elasticsearch::repo_version: '5.4'
+    elasticsearch::restart_on_change: true
+    elasticsearch::api_host: %{::ipaddress}
+    elasticsearch::api_port: '9200'
+    elasticsearch::instance:
+        - es-%{::fqdn}:
+            - config:
+                - network.host: %{::ipaddress}
+            - node.name:
+                - "node%{::fqdn}"
+            - cluster.name:
+                - "test_cluster"
+    elasticsearch::config:
+        - cluster.name:
+            - "test_cluster"
+    kibana:
+        - config :
+            - server.port: "5601"
