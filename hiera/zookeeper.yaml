@@ -1,9 +1,0 @@
----
-  classes:
-    - zookeeper
-    - exhibitor
-
-  zookeeper::service_provider: "exhibitor"
-  zookeeper::install_method: "archive"
-  zookeeper::archive_version: '3.4.10'
-  zookeeper::client_ip: "%{::ipaddress}"
