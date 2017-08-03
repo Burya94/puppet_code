@@ -3,17 +3,16 @@
         - elasticsearch
         - kibana
 
-    elasticsearch::version: '1.4.2'
     elasticsearch::java_install: true
     elastucsearch::manage_repo: true
-    elasticsearch::repo_version: '5.4'
+    elasticsearch::repo_version: '5.3'
     elasticsearch::restart_on_change: true
-    elasticsearch::api_host: %{::ipaddress_enp0s8}
+    elasticsearch::api_host: "%{::ipaddress_enp0s8}"
     elasticsearch::api_port: '9200'
     elasticsearch::instance:
         es-%{::fqdn}:
             config:
-                network.host: %{::ipaddress_enp0s8}
+                network.host: "%{::ipaddress_enp0s8}"
                 node.name: "node%{::fqdn}"
                 cluster.name: "test_cluster"
                 discovery.zen.ping.unicast.hosts:
@@ -26,5 +25,5 @@
     kibana:
         config :
             server.port: "5601"
-            server.host: "%{::ipaddress}"
-            elasticsearch.url: ""http://%{::ipaddress_enp0s8}:9200""
+            server.host: "%{::ipaddress_enp0s8}"
+            elasticsearch.url: "http://%{::ipaddress_enp0s8}:9200"
