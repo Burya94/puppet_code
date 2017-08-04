@@ -1,12 +1,12 @@
 ---
     classes:
-        - elasticsearch
+        - wrapper
         - kibana
 
     elasticsearch::java_install: true
-    elastucsearch::manage_repo: true
-    elasticsearch::repo_version: '5.3'
-    elasticsearch::restart_on_change: true
+    #elastucsearch::manage_repo: true
+    #elasticsearch::repo_version: '5.3'
+    #elasticsearch::restart_on_change: true
     elasticsearch::api_host: "%{::ipaddress_enp0s8}"
     elasticsearch::api_port: '9200'
     elasticsearch::instance:
