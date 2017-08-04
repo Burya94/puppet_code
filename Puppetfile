@@ -1,4 +1,6 @@
 moduledir './modules/'
+mod 'wrapper',
+  :git    => 'https://github.com/Burya94/wrapper.git',
 mod 'elastic-elasticsearch', '5.3.1'
 mod 'puppetlabs-apt', '4.1.0'
 mod 'puppetlabs-stdlib', '4.17.1'
