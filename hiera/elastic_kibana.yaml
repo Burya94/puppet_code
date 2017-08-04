@@ -3,13 +3,13 @@
         - elasticsearch
         - kibana
 
+    elasticsearch::package_url: 'https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.5.1.rpm'
     elasticsearch::java_install: true
-    elasticsearch::manage_repo: true
-    elasticsearch::repo_version: '5.3'
+    elasticsearch::jvm_options:
+        - '-Xms1g'
+        - '-Xmx1g'
     elasticsearch::restart_on_change: true
-    elasticsearch::api_host: "%{::ipaddress_enp0s8}"
-    elasticsearch::api_port: '9200'
-    elasticsearch::instance:
+    elasticsearch::instances:
         es-%{::fqdn}:
             config:
                 network.host: "%{::ipaddress_enp0s8}"
@@ -22,8 +22,7 @@
     elasticsearch::config:
         cluster.name:
             "test_cluster"
-    kibana:
-        config :
+    kibana::config:
             server.port: "5601"
             server.host: "%{::ipaddress_enp0s8}"
             elasticsearch.url: "http://%{::ipaddress_enp0s8}:9200"
