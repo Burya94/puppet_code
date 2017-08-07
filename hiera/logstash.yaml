@@ -9,8 +9,8 @@
         - '-Xms512m'
         - '-Xmx512m'
     logstash::service_provider: 'systemd'
-    my_logstash_configs:
-        basic:
+    logstash::configfile:
+        my_ls_config:
             content: 'input{
                 file{
                     type => "some_access_log"
