@@ -1,0 +1,6 @@
+---
+    classes:
+        - kibana
+    kibana::config:
+        server.port: "5601"
+        elasticsearch.url: "http://10.231.230.10:9200"

@@ -1,18 +1,21 @@
 ---
     classes:
         - logstash
+        - java
+        - wget
 
     logstash::package_url: 'https://artifacts.elastic.co/downloads/logstash/logstash-5.5.1.rpm'
     logstash::jvm_options:
         - '-Xms512m'
         - '-Xmx512m'
+    logstash::service_provider: 'systemd'
     my_logstash_configs:
         basic:
             content: 'input{
                 file{
                     type => "some_access_log"
                     path => [ "/var/log/logstash/logstash.log"]
-                    
+
                 }
             }
             output{
