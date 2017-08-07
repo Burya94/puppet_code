@@ -6,3 +6,17 @@
     logstash::jvm_options:
         - '-Xms512m'
         - '-Xmx512m'
+    my_logstash_configs:
+        basic:
+            content: 'input{
+                file{
+                    type => "some_access_log"
+                    path => [ "/var/log/logstash/logstash.log"]
+                    
+                }
+            }
+            output{
+                elasticsearch {
+                    hosts => [ "${proxy_dns}:9200" ]
+                }
+            }'
