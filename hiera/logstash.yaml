@@ -29,7 +29,6 @@
                 }
             }'
 
-    python::version: "3/3.3/"
     python::pip: "present"
     curator::provider: 'pip'
     curator::host: "10.231.230.10"
