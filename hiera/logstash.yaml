@@ -3,6 +3,8 @@
         - wget
         - java
         - logstash
+        - pip
+        - curator
 
     logstash::package_url: 'https://artifacts.elastic.co/downloads/logstash/logstash-5.5.1.rpm'
     logstash::jvm_options:
@@ -15,12 +17,24 @@
             content: 'input{
                 file{
                     type => "some_access_log"
-                    path => [ "/var/log/logstash/logstash.log"]
-
+                    path => [ "/var/log/logstash/logstash-plain.log"]
+                    start_position => "end"
+                    stat_interval => 1
+                    discover_interval => 30
                 }
             }
             output{
                 elasticsearch {
-                    hosts => [ "${proxy_dns}:9200" ]
+                    hosts => [ "10.231.230.10:9200" ]
                 }
             }'
+
+    curator::manage_repo: true
+    curator::provider: 'yum'
+    curator::host: "10.231.230.10"
+    curator::jobs:
+        logstash_close:
+            comand: close,
+            older_then: 1
+            cron_hour: 10
+            cron_minute: 10
