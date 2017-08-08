@@ -1,6 +1,5 @@
 ---
 :backends:
-  - eyaml
   - yaml
 
 :yaml:
@@ -10,13 +9,7 @@
 # When specifying a datadir, make sure the directory exists.
   :datadir: "/etc/puppetlabs/code/environments/%{environment}/hiera"
 
-:eyaml:
-  :datadir: "/etc/puppetlabs/code/environments/%{environment}/hiera"
-  :pkcs7_private_key: "/etc/puppetlabs/puppet/eyaml/%{environment}_private_key.pkcs7.pem"
-  :pkcs7_public_key:  "/etc/puppetlabs/puppet/eyaml/%{environment}_public_key.pkcs7.pem"
 
 :hierarchy:
   - "%{::role}"
-  - "secure"
-  - "%{::osfamily}"
   - "common"
