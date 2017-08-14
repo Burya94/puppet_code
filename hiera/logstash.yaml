@@ -11,18 +11,15 @@
         - '-Xms512m'
         - '-Xmx512m'
     logstash::service_provider: 'systemd'
+    logstash::plugin: 'logstash-input-kinesis'
     logstash:status: 'enabled'
     logstash_configs:
         basic:
             content: 'input{
-                file{
-                    type => "some_access_log"
-                    path => [ "/var/log/logstash/logstash-plain.log"]
-                    start_position => "end"
-                    stat_interval => 1
-                    discover_interval => 30
+            kinesis {
+            kinesis_stream_name => "my-logging-stream"
+            codec => json { }
                 }
-            }
             output{
                 elasticsearch {
                     hosts => [ "10.231.230.10:9200" ]
