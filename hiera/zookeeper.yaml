@@ -29,86 +29,53 @@
         <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
         <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-        	<appender name="console" class="org.apache.log4j.ConsoleAppender">
-        		<param name="Target" value="System.out" />
-        		<layout class="org.apache.log4j.PatternLayout">
-        			<param name="ConversionPattern" value="%-5p %c{1} - %m%n" />
-        		</layout>
-        	</appender>
-        	<appender name="usage" class="org.apache.log4j.rolling.RollingFileAppender">
-        		<param name="Append" value="true" />
-        		<rollingPolicy class="com.elsevier.common.log.CustomTimeBasedRollingPolicy">
-        		    <param name="MaxBackupIndex" value="120" />
-        			<param name="ActiveFileName" value="/els/log/tomcat/SolrSearchSvc/usage.out" />
-        			<param name="FileNamePattern"
-        				value="/els/log/tomcat/SolrSearchSvc/usage_%d{yyyy-MM-dd-HH}.out.gz" />
-        			<param name="ActiveFileName" value="/els/log/tomcat/SolrSearchSvc/usage.out" />
-        		</rollingPolicy>
-        		<layout class="org.apache.log4j.PatternLayout">
-        			<param name="ConversionPattern" value="%d{k:mm:ss:SSS/zzz(M/d/yyyy)} %-5p %c{1} : %m%n" />
-        		</layout>
+          <appender name="file" class="org.apache.log4j.RollingFileAppender">
+        	   <param name="append" value="false" />
+        	   <param name="maxFileSize" value="10KB" />
+        	   <param name="maxBackupIndex" value="5" />
+        	   <!-- For Tomcat -->
+        	   <param name="file" value="./zookeeper.log" />
+        	   <layout class="org.apache.log4j.PatternLayout">
+        		<param name="ConversionPattern"
+        			value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+        	   </layout>
         	</appender>
 
-        	<appender name="util" class="org.apache.log4j.rolling.RollingFileAppender">
-        		<param name="Append" value="true" />
-        		<rollingPolicy class="com.elsevier.common.log.CustomTimeBasedRollingPolicy">
-        		    <param name="MaxBackupIndex" value="120" />
-        			<param name="ActiveFileName" value="/els/log/tomcat/SolrSearchSvc/SolrSearchSvc.out" />
-        			<param name="FileNamePattern"
-        				value="/els/log/tomcat/SolrSearchSvc/SolrSearchSvc_%d{yyyy-MM-dd-HH}.out.gz" />
-        			<param name="ActiveFileName" value="/els/log/tomcat/SolrSearchSvc/SolrSearchSvc.out" />
-        		</rollingPolicy>
-        		<layout class="org.apache.log4j.PatternLayout">
-        			<param name="ConversionPattern" value="%d{k:mm:ss:SSS/zzz(M/d/yyyy)} %-5p %c{1} : %m%n" />
-        		</layout>
-        	</appender>
+          <appender name="KINESIS" class="com.amazonaws.services.kinesis.log4j.KinesisAppender">
+            <layout class="org.apache.log4j.PatternLayout">
+              <param name="ConversionPattern" value="%m" />
+            </layout>
+            <param name="streamName" value="els-srch-vi-test" />
+            <param name="encoding" value="UTF-8" />
+            <param name="maxRetries" value="3" />
+            <param name="bufferSize" value="1000" />
+            <param name="threadCount" value="20" />
+            <param name="shutdownTimeout" value="30" />
+            <param name="endpoint" value="kinesis.us-east-1.amazonaws.com" />
+            <param name="region" value="us-east-1" />
+          </appender>
 
-        	<appender name="kinesisBlocking" class="com.amazonaws.services.kinesis.log4j.KinesisAppender">
-        		<param name="encoding" value="UTF-8"/>
-        		<param name="endpoint" value="kinesis.us-east-1.amazonaws.com"/>
-        		<param name="maxRetries" value="3"/>
-        		<param name="region" value="us-east-1"/>
-        		<param name="shutdownTimeout" value="30"/>
-        		<param name="streamName" value="${kinesis.streamname}"/>
-        		<param name="threshold" value="INFO"/>
-        		<param name="threadCount" value="1"/>
-        		<layout class="net.logstash.log4j.JSONEventLayoutV1">
-        			<param name="locationInfo" value="false"/>
-        			<param name="UserFields" value="application:SolrSearchService" />
-        		</layout>
-        	</appender>
+          <appender name="kinesis" class="org.apache.log4j.AsyncAppender">
+              <param name="blocking" value="false"/>
+              <appender-ref ref="KINESIS"/>
+          </appender>
 
-        	<appender name="kinesis" class="org.apache.log4j.AsyncAppender">
-        		<param name="blocking" value="false"/>
-        		<appender-ref ref="kinesisBlocking"/>
-        	</appender>
+          <root>
+              <level value="ERROR" />
+              <appender-ref ref="file" />
+              <appender-ref ref="KINESIS"/>
+          </root>
 
-        	<logger name="com.amazonaws.latency" additivity="false">
-        		<level value="WARN"/>
-        		<appender-ref ref="util"/>
-        	</logger>
+          <logger name="com.amazonaws.latency" additivity="false">
+              <level value="WARN"/>
+              <appender-ref ref="KINESIS"/>
+          </logger>
 
-        	<logger name="ForcedLogger">
-        		<level value="DEBUG" />
-        	</logger>
+          <logger name="KinesisLogger" additivity="false">
+            <level value="INFO" />
+            <appender-ref ref="KINESIS" />
+          </logger>
 
-        	<logger name="com.elsevier.rest.lite.servlet.UsageLoggerFilter" additivity="false">
-        		<level value="INFO" />
-        		<appender-ref ref="usage" />
-        		<appender-ref ref="kinesis" />
-        	</logger>
-
-        	<logger name="com.amazonaws.services.kinesis" additivity="false">
-        		<level value="INFO"/>
-        		<appender-ref ref="util" />
-        	</logger>
-
-        	<root>
-        		<priority value="info" />
-        		<!-- <appender-ref ref="console" /> -->
-        		<appender-ref ref="util" />
-        		<appender-ref ref="kinesis" />
-        	</root>
         </log4j:configuration>
 
 
