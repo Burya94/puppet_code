@@ -4,7 +4,9 @@ node default{
     validate_array($classes)
     hiera_include('classes')
     $logstash_configs = hiera('logstash_configs', {})
-    create_resources('logstash::configfile', $logstash_configs) 
+    create_resources('logstash::configfile', $logstash_configs)
+    $logstash_plugins = hiera('logstash_plugins', {})
+    create_resource('logstash::plugin', $logstash_plugins)
   }
   else{
     notify { 'Default node invocation' :}

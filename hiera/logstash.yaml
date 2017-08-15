@@ -11,7 +11,6 @@
         - '-Xms512m'
         - '-Xmx512m'
     logstash::service_provider: 'systemd'
-    logstash::plugin: 'logstash-input-kinesis'
     logstash:status: 'enabled'
     logstash_configs:
         basic:
@@ -25,6 +24,9 @@
                     hosts => [ "10.231.230.10:9200" ]
                 }
             }'
+
+    logstash_plugins:
+        logstash-input-kinesis:
 
     python::pip: "present"
     curator::provider: 'pip'
