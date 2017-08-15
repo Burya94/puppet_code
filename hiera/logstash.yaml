@@ -16,8 +16,9 @@
         basic:
             content: 'input{
             kinesis {
+            application_name => "dynamo_test"
             kinesis_stream_name => "my-logging-stream"
-            codec => json { }
+            region => "us-east-1"
                 }
             output{
                 elasticsearch {
