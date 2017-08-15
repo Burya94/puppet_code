@@ -6,8 +6,6 @@
   zookeeper::install_method: "archive"
   zookeeper::archive_version: '3.4.10'
   zookeeper::client_ip: "%{::ipaddress}"
-  zookeeper::zk_dir: '/opt/zookeeper'
-  # zookeeper config
   zookeeper::cfg_dir: '/opt/zookeeper/conf'
 
   exhibitor::zk_data_dir: '/var/lib/zookeeper/'
@@ -15,16 +13,18 @@
   exhibitor::zk_install_dir: '/opt/zookeeper/'
 
   exhibitor::defaultfile_opts:
+    defaultconfig: '/opt/exhibitor/exhibitor.conf'
+    s3region: 'us-east-1'
     configtype: 's3'
     s3config: 'puppet_bucket_test:exhibitor'
 
 
-configs:
-  /opt/zookeeper/conf/log4j.xml:
-    owner: root
-    group: root
-    mode: '0644'
-    content: |
+  configs:
+    /opt/zookeeper/conf/log4j.xml:
+      owner: root
+      group: root
+      mode: '0644'
+      content: |
         <?xml version="1.0" encoding="UTF-8" ?>
         <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
@@ -112,12 +112,12 @@ configs:
         </log4j:configuration>
 
 
-    notify:
-      - Exec[restart_zookeeper]
-  /opt/zookeeper/conf/kinesis-log4j-appender-1.0.0.jar:
-    owner: root
-    group: root
-    mode: '0644'
-    source: http://emr-kinesis.s3.amazonaws.com/publisher/kinesis-log4j-appender-1.0.0.jar
-    notify:
-      - File[/opt/zookeeper/conf/log4j.xml]
+      notify:
+        - Exec[restart_zookeeper]
+    /opt/zookeeper/conf/kinesis-log4j-appender-1.0.0.jar:
+      owner: root
+      group: root
+      mode: '0644'
+      source: http://emr-kinesis.s3.amazonaws.com/publisher/kinesis-log4j-appender-1.0.0.jar
+      notify:
+        - File[/opt/zookeeper/conf/log4j.xml]
