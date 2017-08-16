@@ -7,6 +7,7 @@
   zookeeper::archive_version: '3.4.10'
   zookeeper::client_ip: "%{::ipaddress}"
   zookeeper::cfg_dir: '/opt/zookeeper/conf'
+  zookeeper::java_opts: '-Dkinesis.stream=els-srch-vi-test'
 
   exhibitor::zk_data_dir: '/var/lib/zookeeper/'
   exhibitor::zk_log_dir: '/var/log/zookeeper/log'
@@ -46,7 +47,7 @@
             <layout class="org.apache.log4j.PatternLayout">
               <param name="ConversionPattern" value="%m" />
             </layout>
-            <param name="streamName" value="els-srch-vi-test" />
+            <param name="streamName" value="${kinesis.stream}" />
             <param name="encoding" value="UTF-8" />
             <param name="maxRetries" value="3" />
             <param name="bufferSize" value="1000" />
@@ -84,7 +85,7 @@
 
       notify:
         - Exec[restart_zookeeper]
-    /opt/zookeeper/conf/kinesis-log4j-appender-1.0.0.jar:
+    /opt/zookeeper/lib/kinesis-log4j-appender-1.0.0.jar:
       owner: root
       group: root
       mode: '0644'
