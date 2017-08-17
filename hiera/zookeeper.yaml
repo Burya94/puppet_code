@@ -77,7 +77,7 @@
 
       notify:
         - Exec[restart_zookeeper]
-    /opt/zookeeper/lib/kinesis-log4j-appender-1.0.0.jar:
+    "%{scope('exhibitor::zk_install_dir')}"lib/kinesis-log4j-appender-1.0.0.jar:
       owner: root
       group: root
       mode: '0644'
