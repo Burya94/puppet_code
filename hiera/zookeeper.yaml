@@ -45,7 +45,11 @@
 
           <appender name="KINESIS" class="com.amazonaws.services.kinesis.log4j.KinesisAppender">
             <layout class="org.apache.log4j.PatternLayout">
-              <param name="ConversionPattern" value="%m" />
+              <param name="ConversionPattern" value"%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+            </layout>
+            <layout class="net.logstash.log4j.JSONEventLayoutV1">
+                <param name="locationInfo" value="false"/>
+                <param name="UserFields" value="application:Zookeeper"/>
             </layout>
             <param name="streamName" value="${kinesis.stream}" />
             <param name="encoding" value="UTF-8" />
@@ -61,18 +65,6 @@
               <param name="blocking" value="false"/>
               <appender-ref ref="KINESIS"/>
           </appender>
-
-          <logger name="warn" additivity="false">
-              <level value="WARN"/>
-              <appender-ref ref="kinesis"/>
-              <appender-ref ref="file" />
-          </logger>
-
-          <logger name="KinesisLogger" additivity="false">
-            <level value="INFO" />
-            <appender-ref ref="kinesis" />
-            <appender-ref ref="file" />
-          </logger>
 
           <root>
               <priority value="info" />
