@@ -6,7 +6,7 @@
         - python
         - curator
 
-    logstash::package_url: 'https://artifacts.elastic.co/downloads/logstash/logstash-5.5.1.rpm'
+    logstash::package_url: 'https://artifacts.elastic.co/downloads/logstash/logstash-5.5.0.rpm'
     logstash::jvm_options:
         - '-Xms512m'
         - '-Xmx512m'
@@ -17,9 +17,9 @@
             content: 'input{
             kinesis {
             application_name => "dynamo_test"
-            kinesis_stream_name => "my-logging-stream"
+            kinesis_stream_name => "els-srch-vi-test"
             region => "us-east-1"
-                }
+                }}
             output{
                 elasticsearch {
                     hosts => [ "10.231.230.10:9200" ]
@@ -28,6 +28,7 @@
 
     logstash_plugins:
         logstash-input-kinesis:
+            source: NULL
 
     python::pip: "present"
     curator::provider: 'pip'
