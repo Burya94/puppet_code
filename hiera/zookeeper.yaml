@@ -43,8 +43,9 @@
         	</appender>
 
           <appender name="KINESIS" class="com.amazonaws.services.kinesis.log4j.KinesisAppender">
-            <layout class="org.apache.log4j.PatternLayout">
-              <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+            <layout class="net.logstash.log4j.JSONEventLayoutV1">
+                <param name="locationInfo" value="false" />
+                <param name="UserFields" value="application:Zookeeper" />
             </layout>
             <param name="streamName" value="${kinesis.stream}" />
             <param name="encoding" value="UTF-8" />
@@ -80,3 +81,18 @@
       notify:
         - File[/opt/zookeeper/conf/log4j.xml]
         - Exec[restart_zookeeper]
+    "%{hiera('exhibitor::zk_install_dir')}lib/json-smart-1.1.1.jar":
+        owner: root
+        group: root
+        mode: '0644'
+        source: https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/json-smart/json-smart-1.1.1.jar
+    "%{hiera('exhibitor::zk_install_dir')}lib/jsonevent-layout-1.7.jar":
+        owner: root
+        group: root
+        mode: '0644'
+        source: http://central.maven.org/maven2/net/logstash/log4j/jsonevent-layout/1.7/jsonevent-layout-1.7.jar
+    "%{hiera('exhibitor::zk_install_dir')}lib/commons-lang-2.6.jar":
+        owner: root
+        group: root
+        mode: '0644'
+        source: http://central.maven.org/maven2/commons-lang/commons-lang/2.6/commons-lang-2.6.jar
