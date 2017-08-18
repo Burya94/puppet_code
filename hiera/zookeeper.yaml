@@ -22,7 +22,7 @@
 
 
   configs:
-    /opt/zookeeper/conf/log4j.xml:
+    "%{hiera('exhibitor::zk_install_dir')}conf/log4j.xml":
       owner: root
       group: root
       mode: '0644'
@@ -79,20 +79,29 @@
       mode: '0644'
       source: http://emr-kinesis.s3.amazonaws.com/publisher/kinesis-log4j-appender-1.0.0.jar
       notify:
-        - File[/opt/zookeeper/conf/log4j.xml]
+        - File[%{hiera('exhibitor::zk_install_dir')}conf/log4j.xml]
         - Exec[restart_zookeeper]
     "%{hiera('exhibitor::zk_install_dir')}lib/json-smart-1.1.1.jar":
         owner: root
         group: root
         mode: '0644'
         source: https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/json-smart/json-smart-1.1.1.jar
+        notify:
+            - File[%{hiera('exhibitor::zk_install_dir')}lib/kinesis-log4j-appender-1.0.0.jar]
+            - Exec[restart_zookeeper]
     "%{hiera('exhibitor::zk_install_dir')}lib/jsonevent-layout-1.7.jar":
         owner: root
         group: root
         mode: '0644'
         source: http://central.maven.org/maven2/net/logstash/log4j/jsonevent-layout/1.7/jsonevent-layout-1.7.jar
+        notify:
+            - File[%{hiera('exhibitor::zk_install_dir')}lib/kinesis-log4j-appender-1.0.0.jar]
+            - Exec[restart_zookeeper]
     "%{hiera('exhibitor::zk_install_dir')}lib/commons-lang-2.6.jar":
         owner: root
         group: root
         mode: '0644'
         source: http://central.maven.org/maven2/commons-lang/commons-lang/2.6/commons-lang-2.6.jar
+        notify:
+            - File[%{hiera('exhibitor::zk_install_dir')}lib/kinesis-log4j-appender-1.0.0.jar]
+            - Exec[restart_zookeeper]
