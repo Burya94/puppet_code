@@ -6,7 +6,7 @@ node default{
     $logstash_configs = hiera('logstash_configs', {})
     create_resources('logstash::configfile', $logstash_configs)
     $logstash_plugins = hiera('logstash_plugins', {})
-    create_resource('logstash::plugin', $logstash_plugins)
+    create_resources('logstash::plugin', $logstash_plugins)
   }
   else{
     notify { 'Default node invocation' :}

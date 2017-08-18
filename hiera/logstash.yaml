@@ -19,32 +19,28 @@
     common::logstash::hosts: '10.231.230.10:9200'
     common::logstash::custom_configs:
       kinesis:
-        order: 01
         inline_template: |
           input {
             kinesis {
               kinesis_stream_name => "<%= scope['common::logstash::kinesis_stream_name'] %>"
               codec               => json {}
               application_name    => "<%= scope['common::logstash::application_name'] %>"
-              metrics             => "<%= scope['common::logstash::metrics'] %>"
               region              => "<%= scope['common::logstash::region'] %>"
             }
           }
 
       amazon_es:
-        order: 30
         inline_template: |
           output {
             if [application] == "Zookeeper" {
-              amazon_es {
+              elasticsearch {
                 hosts         => ["<%= scope['common::logstash::hosts'] %>"]
-                region        => "<%= scope['common::logstash::region'] %>"
-                index         => "sss-%%{%}{+YYYY.MM.dd}"
-                flush_size    => <%= scope['common::logstash::flush_size'] %>
+                index         => "zookeeper-%%{%}{+YYYY.MM.dd}"
                 template      => "/etc/logstash/zookeeper-template.json"
                 template_name => "zookeeper"
               }
               }
+          }
 
     common::logstash::custom_jsons:
         /etc/logstash/zookeeper-template.json:
@@ -93,8 +89,10 @@
                         "@version":
                           include_in_all: false
                           type: keyword
-                  aliases: {}
 
+    logstash_plugins:
+        logstash-input-kinesis:
+            source: NULL
     python::pip: "present"
     curator::provider: 'pip'
     curator::host: "10.231.230.10"
