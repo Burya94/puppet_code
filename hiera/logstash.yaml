@@ -17,6 +17,7 @@
     common::logstash::kinesis_stream_name: 'els-srch-vi-test'
     common::logstash::application_name: 'dynamo_test'
     common::logstash::hosts: '10.231.230.10:9200'
+    common::logstash::region: 'us-east-1'
     common::logstash::custom_configs:
       kinesis:
         inline_template: |
