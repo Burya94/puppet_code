@@ -2,9 +2,10 @@
     classes:
         - python
         - airflow
+        - systemd
 
     python::pip: 'present'
-
+    python::dev: 'present'
     pip_pkgs:
         psycopg2:
             pkgname: 'psycopg2'
@@ -16,7 +17,6 @@
             pkgname: 'flower'
 
     airflow::version: '1.8.0'
-    airflow::sql_aclchemy_conn: 'postgresql+psycopg2://airflow:airflow@172.17.36.2:5432/airflow'
+    airflow::sql_alchemy_conn: 'postgresql+psycopg2://airflow:airflow@172.17.36.2:5432/airflow'
     airflow::broker_url: 'redis://172.17.36.3:6379/'
     airflow::celery_result_backend: 'db+postgresql://airflow:airflow@172.17.36.2:5432/airflow'
-    

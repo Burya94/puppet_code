@@ -1,5 +1,5 @@
 node default{
-  $packages = ['gcc', 'gcc-c++', 'kernel-devel', 'python-devel', 'libxslt-devel', 'libffi-devel', 'openssl-devel']
+  $packages = ['gcc', 'gcc-c++', 'kernel-devel', 'libxslt-devel', 'libffi-devel', 'openssl-devel']
   $classes = hiera('classes', '')
   if ($classes) {
      package { $packages:
