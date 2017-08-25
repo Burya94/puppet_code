@@ -1,0 +1,22 @@
+---
+    classes:
+        - python
+        - airflow
+
+    python::pip: 'present'
+
+    pip_pkgs:
+        psycopg2:
+            pkgname: 'psycopg2'
+        redis:
+            pkgname: 'redis'
+        celery:
+            pkgname: 'celery'
+        flower:
+            pkgname: 'flower'
+
+    airflow::version: '1.8.0'
+    airflow::sql_aclchemy_conn: 'postgresql+psycopg2://airflow:airflow@172.17.36.2:5432/airflow'
+    airflow::broker_url: 'redis://172.17.36.3:6379/'
+    airflow::celery_result_backend: 'db+postgresql://airflow:airflow@172.17.36.2:5432/airflow'
+    

@@ -1,14 +1,17 @@
 node default{
+  $packages = ['gcc', 'gcc-c++', 'kernel-devel', 'python-devel', 'libxslt-devel', 'libffi-devel', 'openssl-devel']
   $classes = hiera('classes', '')
   if ($classes) {
-    validate_array($classes)
-    hiera_include('classes')
-    $logstash_configs = hiera('logstash_configs', {})
-    create_resources('logstash::configfile', $logstash_configs)
-    $logstash_plugins = hiera('logstash_plugins', {})
-    create_resources('logstash::plugin', $logstash_plugins)
+     package { $packages:
+         ensure => 'installed'
+     }
+     validate_array($classes)
+     hiera_include('classes')
+     $pip_pkgs = hiera('pip_pkgs', {})
+     create_resources('python::pip', $pip_pkgs)
+
   }
   else{
-    notify { 'Default node invocation' :}
+      notify { 'Default node invocation' :}
   }
 }
