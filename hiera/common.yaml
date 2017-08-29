@@ -17,14 +17,23 @@
             pkgname: 'flower'
 
     airflow::version: '1.8.0'
-    airflow::home_folder: '/opt/airflow'
+    airflow::home_folder: '/opt/airflow/'
     airflow::folders_mode: '0755'
-    airflow::dags_folder: "%{hiera('airflow::home_folder')}/dags"
-    airflow::plugins_folder: "%{hiera('airflow::home_folder')}/plugins"
+    airflow::dags_folder: "%{hiera('airflow::home_folder')}dags"
+    airflow::plugins_folder: "%{hiera('airflow::home_folder')}plugins"
     airflow::user: 'airflow'
     airflow::sql_alchemy_conn: 'postgresql+psycopg2://airflow:airflow@172.17.36.2:5432/airflow'
     airflow::broker_url: 'redis://172.17.36.3:6379/'
     airflow::celery_result_backend: 'db+postgresql://airflow:airflow@172.17.36.2:5432/airflow'
+
+    execute:
+        "airflow initdb":
+            command: '/usr/bin/airflow initdb'
+            environment: "AIRFLOW_HOME=%{hiear('airflow::home_folder')}"
+            user: "%{hiera('airflow::user')}"
+            require:
+                - File[/home/%{hiera('airflow::user')}/.ssh/id_rsa]
+                - File[%{hiera('airflow::home_folder')}/airflow.cfg]
 
 
     ssh_file:
@@ -36,6 +45,7 @@
             require: User[%{hiera('airflow::user')}]
         "/home/%{hiera('airflow::user')}/.ssh/id_rsa":
             ensure: 'file'
+            mode: '0400'
             require: File[/home/%{hiera('airflow::user')}/.ssh]
             content: ENC[PKCS7,MIIH/QYJKoZIhvcNAQcDoIIH7jCCB+oCAQAxggEhMIIBHQIBADAFMAACAQEw
                      DQYJKoZIhvcNAQEBBQAEggEAdJdReF/PCoAahSLZm7P3HOug69BAzz2mlKQU
@@ -92,4 +102,5 @@
             provider: 'git'
             source: 'git@github.com:Burya94/dags.git'
             user: "%{hiera('airflow::user')}"
+            identity: "/home/%{hiera('airflow::user')}/.ssh/id_rsa"
             require: File[/home/%{hiera('airflow::user')}/.ssh/id_rsa]
