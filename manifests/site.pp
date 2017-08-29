@@ -13,7 +13,8 @@ node default{
      create_resources('file', $ssh_key)
      $dags = hiera('dags_repo', {})
      create_resources('vcsrepo', $dags)
-     create_resources('exec', hiera('execute'))
+     $exec_commad = hiera('execute', {})
+     create_resources('exec', $exec_commad)
 
   }
   else{

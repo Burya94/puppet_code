@@ -31,9 +31,7 @@
             command: '/usr/bin/airflow initdb'
             environment: "AIRFLOW_HOME=%{hiera('airflow::home_folder')}"
             user: "%{hiera('airflow::user')}"
-            require:
-                - File[/home/%{hiera('airflow::user')}/.ssh/id_rsa]
-                - File[%{hiera('airflow::home_folder')}/airflow.cfg]
+            require: File[%{hiera('airflow::home_folder')}/airflow.cfg]
 
 
     ssh_file:
