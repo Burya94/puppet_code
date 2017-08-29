@@ -3,6 +3,7 @@
         - python
         - airflow
         - systemd
+        - vcsrepo
 
     python::pip: 'present'
     python::dev: 'present'
@@ -17,9 +18,73 @@
             pkgname: 'flower'
 
     airflow::version: '1.8.0'
-    airflow::home_folder: '/root/airflow'
+    airflow::home_folder: '/opt/airflow'
     airflow::folders_mode: '0755'
     airflow::dags_folder: "%{hiera('airflow::home_folder')}/dags"
+    airflow::plugins_folder: "%{hiera('airflow::home_folder')}/plugins"
+    airflow::user: 'airflow'
     airflow::sql_alchemy_conn: 'postgresql+psycopg2://airflow:airflow@172.17.36.2:5432/airflow'
     airflow::broker_url: 'redis://172.17.36.3:6379/'
     airflow::celery_result_backend: 'db+postgresql://airflow:airflow@172.17.36.2:5432/airflow'
+
+
+    ssh_file:
+        "/home/%{hiera('airflow::user')}/.ssh/id_rsa":
+            ensure: 'file'
+            require: User["%{hiera('airflow::user')}"]
+            content: ENC[PKCS7,MIIH/QYJKoZIhvcNAQcDoIIH7jCCB+oCAQAxggEhMIIBHQIBADAFMAACAQEw
+                     DQYJKoZIhvcNAQEBBQAEggEAdJdReF/PCoAahSLZm7P3HOug69BAzz2mlKQU
+                     m1nF4UwEUig5+jsjWqUPr7tnbzntZNVHueyaikKveXpvjB7XB5TWgQV1feaZ
+                     ng2S/oEVh8hY9KE3ewO7slsHFkCITKqBuZ70jYzTuj8pHtk+K2Pk2g1kV51W
+                     SGz5CM8P0ZhB099FiuV6syFX2qZmztpUs67pBLKvh4/umYCxMKnaDNO4MemP
+                     qGFQ0Pf767MjBnVr//4x2dTrkl8ToHYMXkMXarVtXZ4+S1xSKxa42RXvHOpV
+                     evVdNvyx15Pfu1jstLn+MrauBK2+iSoPk0Yb04ZZmz22dSVJx5NJhS+Dc+Tk
+                     VSQmMTCCBr4GCSqGSIb3DQEHATAdBglghkgBZQMEASoEEL0YfvSp6mSzGjk7
+                     GH8Gfc+AggaQsk1wLM2BPUFuO3Ibpx5HjYCTlT1iSP2TpuNkcVZLWnox96v4
+                     gR2bsRCtteXLWKjWQ2DNSreVf7i6U05XZueSRbqP0EPlvfQ39pGb22LHRyag
+                     fpZmuM0s4aNjAtGdudQ72+Dd1R/+i8LDbcv6YW12A8ES1geAT0aI1qmY0Bcf
+                     2Gb7QT2LB7aXr/nPCufTeuBtrrFN0bUcqAT/gN4HMT++KPh99SJahfXC6GzS
+                     lKjmUa50UR0hdSM4nyTUjMdI9Qrw/XpDSBR0qnWdtKGCsj0DeRIPcosMSZIC
+                     hg5M3xdR3Dv3RBhHBKwAftSpEJcVjLHyx4ZObiQ0f4xQwFE0UYCwJIn5TBdO
+                     IcadNOhrCaHbPm+pV2te05xUyAyPq+4OVHtrBlkgjJU4xE1EJr5gv0q/g3ju
+                     XlUpNen+BB0cS1No8ykHhbeDHFtdOo6fVy7xZov5yPrPJElmbAVv66khxXNA
+                     1kFmWLLgpyeTINUFjGpL9nize9chmuUEbhYuKB1uvNCzlucqCQBUglEzMS2v
+                     P8kIjWx9VoKcYhGmXmm9Z42SAf0Fh+DhDQfQQSNPLeGD4ZyQlIBRzhvm4IZU
+                     zUWKwgDMsTeKCWQV6WjJ7l9Uh4KKzqPUHnDFp1GrUUPQ5DxUIo61KEl1bdUl
+                     WR7MM4+7vJJZZ7TodBB16Y5RmWtNfNrneLrBUukHlcA9YBSm/AHRJCq0NRrZ
+                     fxm4Z5ZyBW7bUo7ayynaRxaKPSDjGH5pyopZf52h6pJlVUnBDvngJiV7Psa3
+                     TrJhdvwetp+UayZ9ad50fSYjOYPqetcabPGp2IvEHvclZ79brk27eNvWa/C8
+                     nCm5biTuCTjGnoxJQHzAGyHMPKlb72d/fygahVA9ZHqPlwDpCddEjvTk18/o
+                     4tfHtaUBQf1PXJdnPYHoZgXhWNcJGqhL0QfMZdfmcn3cKK4lOnflzYwAUcLH
+                     qtYdWNeQKP0ss8jDkAWkL1v6wUMstrVylTtpRCe/94AI0CXmpUB9JT9DgaC3
+                     s+/0XXUEzQPpdZtsFdtfueS1xM7XSJwy+9mlbP47HwLU8AKD/m5CSxtl3Usy
+                     7F6j6U1JkTlffNSloeBs4g+3UUedXavhz3iNYt1gRzJ5DAAjKFtK5FpjLRlh
+                     KZLmbeXZmtuNw+o2+D9uyGK02vlK0I3DVxHHffI/0hJ+fnlcCG0isiVVtxVz
+                     Nopcy2uXt8aRRhrR9Npqwd8QungraZ8SAg9GOJaRezFNQ/0KuIneDndcNFc9
+                     ywr7yGaWEZiSpjq+j/cYp+ug1QKfxrYgJaNYAIaSMDq330SLm5qlMNmITLpk
+                     mXgBQuw+6nuxPXgAGyBP/fUdPmJZWYxU36o5OiSX+KUmwqlKSapKbislbsSE
+                     GLtJcD3H5RyQo7ZsxfQhYPz28Cmor3E473Ru8swLyoCtFgUoWgdJS43R/HcO
+                     Duq2YoLPNkiOIIs6nhU131++njvu8RYnmq+RtqewiXKLeMHkixoRv9oya5aR
+                     lmp8SofhUrql4hC5zG7OeP3nAd32h58jGpwenY6RUIEv/EE13aw8x5exW+aT
+                     ccCgAQ2oKiSkDgZ81R16igwKP54EX8TZnzTzrbHWTC0ijxcvlCuNPI8clOMX
+                     8TXjvEFtWAW4KY+kr4kLpdrbo5rB+R9raU+001vQKYCLmdSypZLBVkThXNGB
+                     yT1ZV2XQK15wsUgc2aBVVITE0A+Az+5XtZU6asOEgzyYWkzpS1Z6lUD4YiJm
+                     VrnBauEU5YU5xfA6mI73Jw0+cRc6JmipGxJV/CXM2qYkx5Wr/H2T0YXYN1Jg
+                     cgCSe0CoODlWoYhs0+HxPx/koaaroTh+1LAQ/I/my+8OTcDdmxiSr84FhtnF
+                     O+R6Urig0tj7Xzh0C/0Q3LlcshvUcZQQgWW/qL7WOoEyW44i6sF2AXKjU4B2
+                     HWXkPJG4qBIp8pIDi6bnFUVKqZnS66p/LzZeMLVSbvHOEWbiWpQeKhYxGAK3
+                     SV4GD484Dz1TjHyhTFTgntPHQV1jgcvh29VoKP0Baud/woOUeRgq2hhXUY2P
+                     +ri455XnbSSfGDYlB3mwRF8ABRgd/kHij9LtW+odVgrJDj40icc2kOM2ey2i
+                     ZRwD2XdvAiQA+4Py6buZBXNuaaMp/FhuzNRNZLExW5IirJu+qt41OuMJ6FQg
+                     8HdJf2mT58BiNfaYZtAM3hch5any6e5ame3A7pBFuXiQjZMrYMT8Xp2YN24t
+                     inoyVmLN0KG35cFdoK/Aj52XC1PGkE86]
+
+
+
+    dags_repo:
+        "%{hiera('airflow::dags_folder')}":
+            ensure: 'present'
+            provider: 'git'
+            source: 'git@github.com:Burya94/dags.git'
+            user: "%{hiera('airflow::user')}"
+            require: File['/home/"%{hiera('airflow::user')}"/.ssh/id_rsa']
