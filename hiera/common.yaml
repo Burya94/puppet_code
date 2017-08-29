@@ -3,7 +3,6 @@
         - python
         - airflow
         - systemd
-        - vcsrepo
 
     python::pip: 'present'
     python::dev: 'present'
@@ -29,9 +28,15 @@
 
 
     ssh_file:
+        "/home/%{hiera('airflow::user')}/.ssh":
+            ensure: 'directory'
+            owner: 'root'
+            mode: '0755'
+            group: 'wheel'
+            require: User[%{hiera('airflow::user')}]
         "/home/%{hiera('airflow::user')}/.ssh/id_rsa":
             ensure: 'file'
-            require: User["%{hiera('airflow::user')}"]
+            require: File[/home/%{hiera('airflow::user')}/.ssh]
             content: ENC[PKCS7,MIIH/QYJKoZIhvcNAQcDoIIH7jCCB+oCAQAxggEhMIIBHQIBADAFMAACAQEw
                      DQYJKoZIhvcNAQEBBQAEggEAdJdReF/PCoAahSLZm7P3HOug69BAzz2mlKQU
                      m1nF4UwEUig5+jsjWqUPr7tnbzntZNVHueyaikKveXpvjB7XB5TWgQV1feaZ
@@ -87,4 +92,4 @@
             provider: 'git'
             source: 'git@github.com:Burya94/dags.git'
             user: "%{hiera('airflow::user')}"
-            require: File['/home/"%{hiera('airflow::user')}"/.ssh/id_rsa']
+            require: File[/home/%{hiera('airflow::user')}/.ssh/id_rsa]

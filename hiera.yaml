@@ -1,7 +1,7 @@
 ---
 :backends:
-  - yaml
   - eyaml
+  - yaml
 
 :yaml:
 # datadir is empty here, so hiera uses its defaults:
