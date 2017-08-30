@@ -6,7 +6,7 @@
     python::pip: 'present'
     python::dev: 'present'
 
-    packages:
+    airflow_wrapper::packages:
          - 'gcc'
          - 'gcc-c++'
          - 'kernel-devel'
@@ -14,7 +14,7 @@
          - 'libffi-devel'
          - 'openssl-devel'
          - 'git'
-    pip_packages:
+    airflow_wrapper::pip_packages:
         - 'psycopg2'
         - 'redis'
         - 'celery'
