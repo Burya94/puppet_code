@@ -2,6 +2,8 @@ moduledir './modules/'
 #mod 'similarweb-airflow', '0.1.2'
 #mod 'airflow',
 #    :git => 'https://github.com/similarweb/puppet-airflow.git'
+mod 'airflow_wrapper',
+    :git => 'https://github.com/Burya94/wrapper_airflow.git'
 mod 'airflow',
     :git => 'https://github.com/Burya94/puppet-airflow.git',
     :branch => 'service_mod'
