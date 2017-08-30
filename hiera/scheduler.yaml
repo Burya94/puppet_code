@@ -1,6 +1,7 @@
 ---
     classes:
         - airflow_wrapper
+        - systemd
 
     airflow_wrapper::initializedb: true
     airflow_wrapper::services:
