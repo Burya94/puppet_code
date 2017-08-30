@@ -1,6 +1,7 @@
 ---
     classes:
-        - airflow_wrapper::services
+        - airflow_wrapper
 
     airflow_wrapper::initializedb: true
-    airflow_wrapper::role: 'scheduler'
+    airflow_wrapper::services:
+        - 'scheduler'
