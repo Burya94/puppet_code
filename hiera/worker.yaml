@@ -1,3 +1,5 @@
 ---
     classes:
-        - airflow::service::worker
+        - airflow_wrapper::services
+
+    airflow_wrapper::role: 'worker'

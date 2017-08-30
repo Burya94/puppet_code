@@ -1,4 +1,5 @@
 ---
     classes:
-        - airflow::service::webserver
-        
+        - airflow_wrapper::services
+
+    airflow_wrapper::role: 'webserver'
