@@ -23,8 +23,8 @@
     airflow_wrapper::version: '1.8.0'
     airflow_wrapper::home_folder: '/opt/airflow/'
     airflow_wrapper::folders_mode: '0755'
-    airflow_wrapper::dags_folder: "%{hiera('airflow::home_folder')}dags"
-    airflow_wrapper::plugins_folder: "%{hiera('airflow::home_folder')}plugins"
+    airflow_wrapper::dags_folder: "%{hiera('airflow_wrapper::home_folder')}dags"
+    airflow_wrapper::plugins_folder: "%{hiera('airflow_wrapper::home_folder')}plugins"
     airflow_wrapper::user: 'airflow'
     airflow_wrapper::sql_alchemy_conn: 'postgresql+psycopg2://airflow:airflow@172.17.36.2:5432/airflow'
     airflow_wrapper::broker_url: 'redis://172.17.36.3:6379/'
