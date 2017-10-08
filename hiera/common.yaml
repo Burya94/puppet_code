@@ -5,7 +5,7 @@
   zookeeper::service_provider: "systemd"
   zookeeper::install_method: "archive"
   zookeeper::archive_version: '3.4.10'
-  zookeeper::client_ip: "%{::ipaddress}"
+  zookeeper::client_ip: "%{::ipaddress_enp0s8}"
   zookeeper::cfg_dir: '/opt/zookeeper/conf'
   zookeeper::datastore: '/var/lib/zookeeper'
   zookeeper::datalogstore: '/var/log/zookeeperlog'
