@@ -2,4 +2,8 @@
   classes:
     - solr
 
- 
+ solr::solr_host: '0.0.0.0'
+ solr::zk_hosts:
+   - 172.17.45.6
+   - 172.17.45.7
+   - 172.17.45.8
