@@ -1,0 +1,28 @@
+---
+  classes:
+    - wget
+    - java
+    - elasticsearch
+    - kibana
+    - logstash
+
+  elasticsearch::package_url: 'https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.5.1.rpm'
+  elasticsearch::java_install: true
+  elasticsearch::jvm_options:
+      - '-Xms1g'
+      - '-Xmx1g'
+  elasticsearch::instances:
+    es-%{::fqdn}:
+      config:
+        network.host: "%{::ipaddress_enp0s8}"
+        node.name: "node%{::fqdn}"
+  kibana::config:
+          server.port: "5601"
+          server.host: "%{::ipaddress_enp0s8}"
+          elasticsearch.url: "http://%{::ipaddress_enp0s8}:9200"
+  logstash::package_url: 'https://artifacts.elastic.co/downloads/logstash/logstash-5.5.0.rpm'
+  logstash::jvm_options:
+      - '-Xms512m'
+      - '-Xmx512m'
+  logstash::service_provider: 'systemd'
+  logstash:status: 'enabled'
