@@ -1,7 +1,6 @@
 ---
   classes:
     - wget
-    - java
     - elasticsearch
     - kibana
     - logstash
