@@ -3,6 +3,9 @@
     - solr
 
  solr::solr_host: '0.0.0.0'
+ exec:
+   command: bin/solr start -e cloud -z 172.17.45.6:2181,172.17.45.7:2181,172.17.45.8:2181 -noprompt
+   user: 'root'
  solr::zk_hosts:
    - 172.17.45.6
    - 172.17.45.7
