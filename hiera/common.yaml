@@ -10,5 +10,6 @@
   zookeeper::datastore: '/var/lib/zookeeper'
   zookeeper::datalogstore: '/var/log/zookeeperlog'
   run:
-    command: "/opt/zookeeper/bin/zkServer.sh start"
-    user: "root"
+    'start zk':
+      command: "/opt/zookeeper/bin/zkServer.sh start"
+      user: "root"
