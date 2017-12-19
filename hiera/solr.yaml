@@ -3,9 +3,3 @@
     - solr
 
   solr::solr_host: "%{::ipaddress_enp0s8}"
-
-  init:
-    'init solr with zk':
-      command: "/bin/systemctl stop solr && /opt/solr/bin/solr start -e cloud -z 172.17.45.6:2181,172.17.45.7:2181,172.17.45.8:2181 -noprompt"
-      user: 'root'
-      require: Service[solr]
