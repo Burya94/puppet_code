@@ -1,7 +1,6 @@
 moduledir './modules/'
 mod 'puppetlabs-stdlib', '4.17.1'
-mod 'landcareresearch-solr', '0.5.7'
-mod 'puppetlabs-apt', '4.2.0'
 mod 'maestrodev-wget', '1.7.3'
-mod 'camptocamp-systemd', '1.0.0'
-mod 'spantree-java8', '0.6.0'
+mod 'voxpupuli/puppet-archive',
+  :git => 'https://github.com/voxpupuli/puppet-archive.git',
+  :branch => 'master'

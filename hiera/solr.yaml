@@ -1,7 +1,1 @@
----
-  classes:
-    - solr
 
-  solr::solr_host: "0.0.0.0"
-  solr::java_home: "/usr/lib/jvm/jre-1.8.0-openjdk-1.8.0.151-1.b12.el7_4.x86_64/"
-  solr::solr_heap: "1g"
