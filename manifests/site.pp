@@ -4,20 +4,30 @@ node default{
   }->
   wget::fetch{'download solr':
     source      => 'http://www-eu.apache.org/dist/lucene/solr/7.1.0/solr-7.1.0.tgz',
-    destination => '/usr/local',
+    destination => '/usr/local/solr-7.1.0.tgz',
     timeout     => 0,
     verbose     => false,
   }->
-  archive { '/usr/lib/solr-7.1.0.tgz':
-    ensure          => present,
+  archive { '/usr/local/solr-7.1.0.tgz':
     extract         => true,
+    ensure          => present,
+    extract_path    => '/usr/local/',
+    creates         => '/usr/local/install_sorl_service.ssh',
     extract_command => 'tar xfz %s solr-7.1.0/bin/install_solr_service.sh --strip-components=2',
-    extract_path    => '/usr/lib'
+
   }->
   exec {'install solr':
-    command => 'cd /usr/local/ && bash install_solr_service.sh solr-7.1.0.tgz'
+    command => 'cd /usr/local/ && /bin/bash install_solr_service.sh solr-7.1.0.tgz',
+    path    => '/usr/bin/:/usr/sbin/'
   }->
+  exec { 'stop solr':
+    command => 'service solr stop',
+    path    => '/sbin/'
+  }
   file { '/opt/solr':
-    owner   => 'solr'
+    ensure => directory,
+    recurse => true,
+    owner   => 'solr',
+    group   => 'solr'
   }
 }
